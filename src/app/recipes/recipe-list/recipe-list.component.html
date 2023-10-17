@@ -1,0 +1,28 @@
+<div class="w-full">
+  <button
+    class="flex w-32 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+  >
+    New Recipe
+  </button>
+  <hr class="my-4" />
+  <a
+    href="#"
+    class="rounded-md px-4 py-2 bg-slate-100 shadow flex"
+    aria-current="page"
+    *ngFor="let recipe of recipes"
+  >
+    <div class="grow">
+      <h4 class="text-lg font-semibold">{{ recipe.name }}</h4>
+      <p class="font-semibold">{{ recipe.description }}</p>
+    </div>
+    <span class="">
+      <img
+        [src]="recipe.imagePath"
+        alt="{{ recipe.name }}"
+        class="w-full aspect-auto"
+        style="max-height: 50px"
+      />
+    </span>
+  </a>
+  <app-recipe-item></app-recipe-item>
+</div>
