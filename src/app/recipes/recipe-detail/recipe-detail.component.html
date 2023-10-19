@@ -1,8 +1,12 @@
 <div class="w-full">
-  <img src="" alt="" class="w-full aspect-auto" />
+  <img
+    [src]="recipe.imagePath"
+    alt="{{ recipe.name }}"
+    class="w-full aspect-auto"
+  />
 </div>
 <div class="w-full">
-  <h1>Recipe Name</h1>
+  <h1>{{ recipe.name }}</h1>
 </div>
 <div class="w-full">
   <button
@@ -23,7 +27,7 @@
   </ul>
 </div>
 <div class="w-full">
-  <p>Description</p>
+  <p>{{ recipe.description }}</p>
 </div>
 <div class="w-full">
   <div>Ingredients</div>
