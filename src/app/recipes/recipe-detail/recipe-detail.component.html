@@ -1,34 +1,95 @@
-<div class="w-full">
+<div class="w-full rounded-lg overflow-hidden">
   <img
     [src]="recipe.imagePath"
     alt="{{ recipe.name }}"
     class="w-full aspect-auto"
   />
 </div>
-<div class="w-full">
-  <h1>{{ recipe.name }}</h1>
-</div>
-<div class="w-full">
+<h1 class="text-xl font-bold my-3">{{ recipe.name }}</h1>
+<div appDropdown class="relative">
   <button
-    class="flex w-32 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+    id="dropdownDefaultButton"
+    data-dropdown-toggle="dropdown"
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    type="button"
   >
-    Manage Recipe
+    Dropdown button
+    <svg
+      class="w-2.5 h-2.5 ml-2.5"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 10 6"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m1 1 4 4 4-4"
+      />
+    </svg>
   </button>
-  <ul>
-    <li>
-      <a href="#">Add to Shopping List</a>
-    </li>
-    <li>
-      <a href="#">Edit Recipe</a>
-    </li>
-    <li>
-      <a href="#">Delete Recipe</a>
-    </li>
-  </ul>
+  <!-- Dropdown menu -->
+  <div
+    id="dropdown"
+    class="absolute left-0 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+  >
+    <ul
+      class="py-2 text-sm text-gray-700 dark:text-gray-200"
+      aria-labelledby="dropdownDefaultButton"
+    >
+      <li>
+        <a
+          href="#"
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          (click)="onAddToShoppingList()"
+          >Add to Shopping List</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          >Edit Recipe</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+          >Delete Recipe</a
+        >
+      </li>
+    </ul>
+  </div>
 </div>
-<div class="w-full">
-  <p>{{ recipe.description }}</p>
-</div>
-<div class="w-full">
-  <div>Ingredients</div>
-</div>
+<p class="text-slate-600 my-4">{{ recipe.description }}</p>
+<ul class="space-y-4 text-left text-gray-500 dark:text-gray-400">
+  <li
+    *ngFor="let ingredient of recipe.ingredients"
+    class="flex items-center space-x-3"
+  >
+    <svg
+      class="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 16 12"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M1 5.917 5.724 10.5 15 1.5"
+      />
+    </svg>
+    <span
+      >{{ ingredient.name }}:
+      <span class="font-semibold text-gray-900 dark:text-white">{{
+        ingredient.amount
+      }}</span></span
+    >
+  </li>
+</ul>
