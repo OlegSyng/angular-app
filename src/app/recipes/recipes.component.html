@@ -1,11 +1,6 @@
-<div class="flex">
+<div class="flex gap-10">
   <app-recipe-list class="basis-7/12"></app-recipe-list>
-  <app-recipe-detail
-    class="basis-5/12"
-    *ngIf="selectedRecipe; else infoText"
-    [recipe]="selectedRecipe"
-  ></app-recipe-detail>
-  <ng-template #infoText>
-    <p class="text-center text-2xl font-semibold">Please select a recipe</p>
-  </ng-template>
+  <div class="basis-5/12">
+    <router-outlet></router-outlet>
+  </div>
 </div>

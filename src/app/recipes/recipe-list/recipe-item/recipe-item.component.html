@@ -1,12 +1,12 @@
 <a
-  href="#"
-  class="rounded-md px-4 py-2 bg-slate-100 shadow flex"
+  [routerLink]="[index]"
+  routerLinkActive="bg-slate-200 shadow-md"
+  class="rounded-md px-4 py-2 bg-slate-100 shadow flex cursor-pointer my-2"
   aria-current="page"
-  (click)="onRecipeSelected()"
 >
   <div class="grow">
     <h4 class="text-lg font-semibold">{{ recipe.name }}</h4>
-    <p class="font-semibold">{{ recipe.description }}</p>
+    <p class="text-slate-500">{{ recipe.description }}</p>
   </div>
   <span class="">
     <img
