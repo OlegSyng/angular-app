@@ -8,28 +8,17 @@
     <input
       type="text"
       id="name"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       name="name"
       placeholder="Recipe Name"
       formControlName="name"
+      [ngClass]="{
+        'border-red-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none':
+          !recipeForm.get('name')!.valid && recipeForm.get('name')!.touched,
+        'border-gray-300 focus:ring-blue-500 focus:border-blue-500':
+          recipeForm.get('name')!.valid
+      }"
     />
-    <!-- <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-      <ng-template
-        [ngIf]="invalidProjectName && projectForm.get('projectName')!.touched"
-      >
-        <span class="font-semibold">Oh snapp!</span> Project name you entered in
-        invalid.
-      </ng-template>
-      <ng-template
-        [ngIf]="
-          !invalidProjectName &&
-          !projectForm.get('projectName')!.valid &&
-          projectForm.get('projectName')!.touched
-        "
-      >
-        <span class="font-semibold">Oh snapp!</span> Please enter a valid email.
-      </ng-template>
-    </p> -->
   </div>
   <div class="mb-6">
     <label
@@ -40,22 +29,22 @@
     <input
       type="text"
       id="image-path"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="developer@gloobusit.com"
       name="imagePath"
       formControlName="imagePath"
+      [ngClass]="{
+        'border-red-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none':
+          !recipeForm.get('imagePath')!.valid &&
+          recipeForm.get('imagePath')!.touched,
+        'border-gray-300 focus:ring-blue-500 focus:border-blue-500':
+          recipeForm.get('imagePath')!.valid
+      }"
+      #imagePath
     />
-    <!-- <p
-      class="mt-2 text-sm text-red-600 dark:text-red-500"
-      *ngIf="
-        !projectForm.get('email')!.valid && projectForm.get('email')!.touched
-      "
-    >
-      <span class="font-semibold">Oh snapp!</span> Please enter a valid email.
-    </p> -->
   </div>
-  <div class="w-full rounded-lg overflow-hidden">
-    <img src="" class="w-full aspect-auto" />
+  <div class="w-full rounded-lg overflow-hidden mb-4">
+    <img [src]="imagePath.value" class="w-full aspect-auto" />
   </div>
   <div class="mb-6">
     <label
@@ -66,20 +55,35 @@
     <textarea
       type="text"
       id="description"
-      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       placeholder="Recipe Description"
       rows="6"
       name="description"
       formControlName="description"
+      [ngClass]="{
+        'border-red-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none':
+          !recipeForm.get('description')!.valid &&
+          recipeForm.get('description')!.touched,
+        'border-gray-300 focus:ring-blue-500 focus:border-blue-500':
+          recipeForm.get('description')!.valid
+      }"
     ></textarea>
   </div>
+  <hr />
+  <button
+    type="button"
+    class="text-white bg-green-700 my-6 hover:bg-green-800 disabled:bg-green-400 disabled:shadow-inner focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+    (click)="onAddIngredient()"
+  >
+    Add Ingredient
+  </button>
   <div formArrayName="ingredients">
     <div
-      class="flex gap-x-4 items-center"
+      class="flex gap-x-4 items-end"
       *ngFor="let ingredientControl of controls; let i = index"
       [formGroupName]="i"
     >
-      <div class="mb-6">
+      <div class="mb-2">
         <label
           for="ingredient-name"
           class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white"
@@ -87,42 +91,57 @@
         >
         <input
           type="text"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           name="ingredient-name"
           placeholder="Ingredient Name"
           formControlName="name"
         />
       </div>
-      <div class="mb-6">
+      <div class="mb-2 w-28">
         <label
-          for="ingredient-amount"
+          for="amount"
           class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white"
           >Amount</label
         >
         <input
           type="number"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          name="ingredient-amount"
+          class="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          name="amount"
           placeholder="Amount"
           formControlName="amount"
         />
       </div>
       <button
-        class="text-white bg-red-700 hover:bg-red-800 disabled:bg-red-400 disabled:shadow-inner focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+        type="button"
+        class="inline-flex mb-3 items-center justify-center w-8 h-8 text-sm font-semibold text-red-800 bg-red-100 hover:bg-red-300 disabled:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 disabled:shadow-inner rounded-full text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+        (click)="onDeleteIngredient(i)"
       >
-        X
+        <svg
+          class="w-4 h-4"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"
+          />
+        </svg>
       </button>
     </div>
   </div>
+  <hr class="mb-4" />
   <button
     type="submit"
     class="text-white mr-4 bg-green-700 hover:bg-green-800 disabled:bg-green-400 disabled:shadow-inner focus:ring-4 focus:outline-none focus:ring-green-300 font-semibold rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+    [disabled]="!recipeForm.valid"
   >
     Save
   </button>
   <button
     type="button"
     class="text-white bg-red-700 hover:bg-red-800 disabled:bg-red-400 disabled:shadow-inner focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+    (click)="onCancel()"
   >
     Cancel
   </button>
