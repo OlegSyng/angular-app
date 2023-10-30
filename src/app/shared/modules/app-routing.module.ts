@@ -9,12 +9,14 @@ import { RecipesComponent } from 'src/app/recipes/recipes.component';
 import { ShoppingListComponent } from 'src/app/shopping-list/shopping-list.component';
 
 import { recipeResolver } from '../services/recipe-resolver.service';
+import { authGuardFn } from './auth.guard';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
     {
         path: 'recipes',
         component: RecipesComponent,
+        canActivate: [ authGuardFn ],
         children: [
             { path: '', component: RecipeStartComponent },
             { path: 'new', component: RecipeEditComponent },

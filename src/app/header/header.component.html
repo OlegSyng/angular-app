@@ -9,12 +9,14 @@
       <div class="flex justify-between items-center grow">
         <div class="flex space-x-4">
           <a
+            *ngIf="isAuthenticated"
             routerLink="/recipes"
             routerLinkActive="bg-sky-700"
             class="text-gray-300 hover:bg-sky-700 rounded-md px-3 py-2 text-sm font-medium"
             >Recipes</a
           >
           <a
+            *ngIf="!isAuthenticated"
             routerLink="/auth"
             routerLinkActive="bg-sky-700"
             class="text-gray-300 hover:bg-sky-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
@@ -27,8 +29,7 @@
             >Shopping List</a
           >
         </div>
-
-        <div appDropdown class="relative">
+        <div appDropdown class="relative" *ngIf="isAuthenticated">
           <button
             id="dropdownDefaultButton"
             data-dropdown-toggle="dropdown"
@@ -73,6 +74,13 @@
                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   (click)="onFetchData()"
                   >Fetch Data</a
+                >
+              </li>
+              <li>
+                <a
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  (click)="onLogout()"
+                  >Logout</a
                 >
               </li>
             </ul>
