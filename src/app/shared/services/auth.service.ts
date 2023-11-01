@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
+import { environment } from "src/environments/environment";
 
 import { Router } from "@angular/router";
 import { User } from "../models/user.model";
@@ -35,7 +36,7 @@ export class AuthService
     public signup( email: string, password: string )
     {
         const signUpData: ISignUpData = { email, password, returnSecureToken: true };
-        return this.http.post<IAuthResponseData>( 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCLKc8IUBt7OPGBNAAfr6bJXVtW8XB1LfE', signUpData ).pipe(
+        return this.http.post<IAuthResponseData>( 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseApiKey, signUpData ).pipe(
             catchError( this.handleError ),
             tap( ( responseData ) =>
             {
@@ -47,7 +48,7 @@ export class AuthService
     public login( email: string, password: string )
     {
         const loginData = { email, password, returnSecureToken: true };
-        return this.http.post<IAuthResponseData>( 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCLKc8IUBt7OPGBNAAfr6bJXVtW8XB1LfE', loginData ).pipe(
+        return this.http.post<IAuthResponseData>( 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseApiKey, loginData ).pipe(
             catchError( this.handleError ),
             tap( ( responseData ) =>
             {
